@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+
+    <title>Assignment</title>
+  </head>
+  <body>
+    <!-- Image and text -->
+    <div class="container">
+      <nav class="navbar navbar-dark bg-dark p-2">
+        <a class="navbar-brand" href="http://jaswinders.info/" target="_blank"> Jaswinder Singh Assignment</a>
+          
+        </a>
+      </nav>
+      <br>
+
+      <div class="row justify-content-md-center">
+        <h4>1) Top 4 teams in terms of wins</h4>
+        <div class="col-7">
+          <canvas id="id_topfour"></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Winner</th>
+                <th scope="col">Match Won</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="dashed" />
+
+        <h4>2) Which team won the most number of tosses in the season</h4>
+        <div class="col-7">
+          <canvas id="id_team_won_most"></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Season</th>
+                <th scope="col">Toss Winner</th>
+                <th scope="col">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in tosses %}
+              <tr>
+                <td>{{t.year}}</td>
+                <td>{{t.name}}</td>
+                <td>{{t.count}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <hr class="dashed" />
+        <h4>3) 
+          Which player won the maximum number of Player of the Match awards in
+          the whole season
+        </h4>
+        <div class="col-3">
+          <canvas id="id_player_of_match" ></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Player</th>
+                <th scope="col">Total Match Won</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{playerofmatch.player_of_match}}</td>
+                <td>{{playerofmatch.match}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr class="dashed" />
+        <h4>4) Which team won max matches in the whole season</h4>
+        <div class="col-3">
+          <canvas id="id_team_won_max_season"></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Winner</th>
+                <th scope="col">Total Match Won</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{winner.winner}}</td>
+                <td>{{winner.winners}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr class="dashed" />
+        <h4>5) Which location has the most number of wins for the top team</h4>
+        <div class="col-7">
+          <canvas id="id_location_wins_top_team"></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Winner</th>
+                <th scope="col">City</th>
+                <th scope="col">Match Won</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for w in top4winnerlocation %}
+              <tr>
+                <td>{{w.winner}}</td>
+                <td>{{w.city}}</td>
+                <td>{{w.winners}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <hr class="dashed" />
+        <h4>6) Which % of teams decided to bat when they won the toss</h4>
+        <div class="col-3">
+          <canvas id="id_bat_win_toss"></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Winner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{per}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="dashed" />
+        <h4>7) Which location hosted most number of matches</h4>
+        <div class="col-7">
+          <canvas id="id_location_most_matches"></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Venue</th>
+                <th scope="col">Total Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{most_number.venue}}</td>
+                <td>{{most_number.venues}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="dashed" />
+        <h4>8) Which team won by the highest margin of runs for the season</h4>
+        <div class="col-7">
+          <canvas id="id_highest_margin"></canvas>
+        </div>
+        <div class="col-sm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Name</th>
+                <th scope="col">Margin of Runs</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% for t in topwinner %}
+              <tr>
+                <td>{{t.year}}</td>
+                <td>{{t.name}}</td>
+                <td>{{t.count}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+      integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+      integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+
+    fetch("{{path}}", {
+      method: "get",
+      // headers: { "X-CSRFToken": csrf },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        loadData(data)
+      });
+
+      function loadData(data){
+        const top4winner = data["top4winner"];
+        const most_number = data["most_number"];
+        const per = data["per"];
+        const playerofmatch = data["playerofmatch"];
+        const top4winnerlocation = data["top4winnerlocation"];
+        const topwinner = data["topwinner"];
+        const tosses = data["tosses"];
+        const winner = data["winner"];
+
+        const topfour = document.getElementById("id_topfour");
+        const team_won_most = document.getElementById("id_team_won_most");
+        const player_of_match = document.getElementById("id_player_of_match");
+        const team_won_max_season = document.getElementById("id_team_won_max_season");
+        const locaion_wins_top_team = document.getElementById("id_location_wins_top_team");
+        const location_most_matches = document.getElementById("id_location_most_matches");
+        const bat_win_toss = document.getElementById("id_bat_win_toss");
+        const highest_margin = document.getElementById("id_highest_margin");
+
+        const tables = document.getElementsByClassName("table");
+
+        
+
+        let topfour_labels = new Array();
+        let topfour_data = new Array();
+
+        let team_won_most_labels = new Array();
+        let team_won_most_data = new Array();
+
+        let team_won_max_season_labels = new Array();
+        let team_won_max_season_data = new Array();
+
+        let location_most_matches_labels = new Array();
+        let location_most_matches_data = new Array();
+
+        let bat_win_toss_labels = new Array();
+        let bat_win_toss_data = new Array();
+
+        let highest_margin_labels = new Array();
+        let highest_margin_data = new Array();
+
+        top4winner.map(w=>{
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          const td1 = document.createElement("td");
+        
+          td.innerHTML=w.winner;
+          td1.innerHTML=w.winners;
+          tr.appendChild(td)
+          tr.appendChild(td1)
+
+          topfour_labels.push(w.winner);
+          topfour_data.push(w.winners);
+          
+          tables[0].tBodies[0].appendChild(tr);          
+        });
+
+
+        tosses.map(w=>{
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          const td1 = document.createElement("td");
+          const td2 = document.createElement("td");
+        
+          td.innerHTML=w.year;
+          td1.innerHTML=w.name;
+          td2.innerHTML=w.count;
+          tr.appendChild(td)
+          tr.appendChild(td1)
+          tr.appendChild(td2)
+
+          team_won_most_labels.push(w.year);
+          team_won_most_data.push(w.count);
+
+        tables[1].tBodies[0].appendChild(tr);          
+        })
+      
+
+      
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        const td1 = document.createElement("td");
+
+        td.innerHTML=playerofmatch.player_of_match;
+        td1.innerHTML=playerofmatch.match;
+
+        tr.appendChild(td)
+        tr.appendChild(td1)
+        tables[2].tBodies[0].appendChild(tr);       
+        player_of_match_labels = [playerofmatch.player_of_match, "Total Match"];
+        player_of_match_data = [playerofmatch.match, 100]
+
+
+        
+        const tr1 = document.createElement("tr");
+        const td_1 = document.createElement("td");
+        const td11 = document.createElement("td");
+
+        td_1.innerHTML=winner.winner;
+        td11.innerHTML=winner.winners;
+
+        tr1.appendChild(td_1)
+        tr1.appendChild(td11)
+        tables[3].tBodies[0].appendChild(tr1);       
+
+      team_won_max_season_labels.push(winner.winner);
+      team_won_max_season_data.push(winner.winners);
+
+
+      top4winnerlocation.map(w=>{
+
+        const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          const td1 = document.createElement("td");
+          const td2 = document.createElement("td");
+        
+          td.innerHTML=w.winner;
+          td1.innerHTML=w.city;
+          td2.innerHTML=w.winners;
+          tr.appendChild(td)
+          tr.appendChild(td1)
+          tr.appendChild(td2)
+
+          tables[4].tBodies[0].appendChild(tr);       
+        location_most_matches_labels.push(w.city);
+        location_most_matches_data.push(w.winners);
+      })
+      
+
+      
+      const tr_6 = document.createElement("tr");
+      const td_6 = document.createElement("td");
+
+      td_6.innerHTML=per;
+      tr_6.appendChild(td_6)
+      tables[5].tBodies[0].appendChild(tr_6);       
+
+      location_wins_top_team_labels = ["Toss Win Bat", "Total"];
+      location_wins_top_team_data = [per, 100];
+
+
+      const tr_7 = document.createElement("tr");
+      const td_7 = document.createElement("td");
+      const td_7_1 = document.createElement("td");
+
+      td_7.innerHTML=most_number.venue;
+      td_7_1.innerHTML=most_number.venues;
+
+      tr_7.appendChild(td_7)
+      tr_7.appendChild(td_7_1)
+      tables[6].tBodies[0].appendChild(tr_7);  
+
+
+      bat_win_toss_labels = [most_number.venue];
+      bat_win_toss_data = [most_number.venues];
+
+      topwinner.map(w =>{
+        const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          const td1 = document.createElement("td");
+          const td2 = document.createElement("td");
+        
+          td.innerHTML=w.year;
+          td1.innerHTML=w.name;
+          td2.innerHTML=w.count;
+          tr.appendChild(td)
+          tr.appendChild(td1)
+          tr.appendChild(td2)
+
+          tables[7].tBodies[0].appendChild(tr); 
+
+        highest_margin_labels.push(w.year);
+        highest_margin_data.push(w.count);
+      });
+      
+    
+      const firstChart = new Chart(topfour, {
+        type: "bar",
+        data: {
+          labels: topfour_labels,
+          datasets: [
+            {
+              label: "Winner",
+              data: topfour_data,
+              backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+              "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      const secondChart = new Chart(team_won_most, {
+        type: "bar",
+        data: {
+          labels: team_won_most_labels,
+          datasets: [
+            {
+              label: "Toss Winner",
+              data: team_won_most_data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+
+      const thirdChart = new Chart(player_of_match, {
+        type: "pie",
+        data: {
+          labels: player_of_match_labels,
+          datasets: [
+            {
+              label: "Toss Winner",
+              data: player_of_match_data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+
+      const fourthChart = new Chart(team_won_max_season, {
+        type: "pie",
+        data: {
+          labels: team_won_max_season_labels,
+          datasets: [
+            {
+              label: "Toss Winner",
+              data: team_won_max_season_data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+
+      const fifthChart = new Chart(locaion_wins_top_team, {
+        type: "bar",
+        data: {
+          labels: location_most_matches_labels,
+          datasets: [
+            {
+              label: "Toss Winner",
+              data: location_most_matches_data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+
+      const sixChart = new Chart(bat_win_toss, {
+        type: "pie",
+        data: {
+          labels: location_wins_top_team_labels,
+          datasets: [
+            {
+              label: "Toss Winner",
+              data: location_wins_top_team_data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+
+      const sevenChart = new Chart(location_most_matches, {
+        type: "bar",
+        data: {
+          labels: bat_win_toss_labels,
+          datasets: [
+            {
+              label: "Venue",
+              data: bat_win_toss_data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    
+    
+
+      const eightChart = new Chart(highest_margin, {
+        type: "bar",
+        data: {
+          labels: highest_margin_labels,
+          datasets: [
+            {
+              label: "Venue",
+              data: highest_margin_data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(190, 162, 235, 0.2)",
+                "rgba(150, 162, 235, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(190, 162, 235, 1)",
+                "rgba(150, 162, 235, 1)",
+                "rgba(54, 162, 235, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    
+    }
+    </script>
+  </body>
+</html>
